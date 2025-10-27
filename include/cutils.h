@@ -1,7 +1,7 @@
 #ifndef CUTILS_H
 #define CUTILS_H
 
-#include <stddef.h> // To use "size_t".
+#include <stddef.h>  // To use "size_t".
 #include <stdbool.h> // To use bool type.
 
 // A generic array-backed list.
