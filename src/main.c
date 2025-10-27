@@ -1,29 +1,28 @@
-#include "loans.h"
+// TODO: CMake file to integrate every module.
+#include "cutils.h"
 #include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char name[32];
+    int age;
+} Person;
 
 int main() {
-    loans_init();
-    loadLoans ("loans.txt");
+    ArrayList people;
+    arraylist_init(&people, sizeof(Person)); // store full structs
 
-    int opcao;
-    do {
-        printf("\n--- MENU EMPRÉSTIMOS ---\n");
-        printf("1 - Registar empréstimos\n");
-        printf("2 - Registar devolução\n");
-        printf("3 - Listar empréstimos ativos\n");
-        printf("4 - Guardar e sair\n");
-        printf("Opção: ");
-        scanf("%d", &opcao);
+    Person p1 = {"Alice", 25};
+    Person p2 = {"Bob", 30};
 
-        switch (opcao) {
-            case 1: registerLoan(); break;
-            case 2: registerReturn(); break;
-            case 3: listActiveLoans(); break;
-            case 4: saveLoans("loans.txt"); break;
-            default: printf("Opção inválida!\n");
-        }
-    } while (opcao != 4);
+    arraylist_append(&people, &p1);
+    arraylist_append(&people, &p2);
 
-    loans_free();
-    return 0;    
+    for (size_t i = 0; i < people.count; i++) {
+        Person *p = arraylist_get(&people, i);
+        printf("Person[%zu] = %s (%d years old)\n", i, p->name, p->age);
+    }
+
+    arraylist_free(&people);
+    return 0;
 }
